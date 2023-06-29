@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student and Course Management</title>
+</head>
+<body>
+    <h1>Student Management</h1>
+    <label for="studentId">Student ID:</label>
+    <input type="text" id="studentId">
+    <br>
+    <button onclick="getStudent()">Show Student</button>
+    <button onclick="addStudent()">Add Student</button>
+    <button onclick="deleteStudent()">Delete Student</button>
+    <button onclick="editStudent()">Edit Student</button>
+    <button onclick="getAllStudents()">Show All Students</button>
+    <br>
+    <textarea id="studentResponse" rows="5" cols="50" readonly></textarea>
+    <br>
+    <textarea id="studentJson" rows="5" cols="50"></textarea>
+
+    <h1>Course Management</h1>
+    <label for="courseId">Course ID:</label>
+    <input type="text" id="courseId">
+    <br>
+    <button onclick="getCourse()">Show Course</button>
+    <button onclick="addCourse()">Add Course</button>
+    <button onclick="deleteCourse()">Delete Course</button>
+    <button onclick="editCourse()">Edit Course</button>
+    <button onclick="getAllCourses()">Show All Courses</button>
+    <br>
+    <textarea id="courseResponse" rows="5" cols="50" readonly></textarea>
+    <br>
+    <textarea id="courseJson" rows="5" cols="50"></textarea>
+
+    <script>
+        async function makeRequest(url, method, requestBody) {
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                return await response.text();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function getStudent() {
+            const studentId = document.getElementById('studentId').value;
+            const url = `http://localhost:8080/mySystem/students/${studentId}`;
+
+            try {
+                const response = await makeRequest(url, 'GET');
+                document.getElementById('studentResponse').value = response;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function addStudent() {
+            const requestBody = document.getElementById('studentJson').value;
+            const url = 'http://localhost:8080/mySystem/students';
+
+            try {
+                const response = await makeRequest(url, 'POST', JSON.parse(requestBody));
+                document.getElementById('studentResponse').value = response;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function deleteStudent() {
+            const studentId = document.getElementById('studentId').value;
+            const url = `http://localhost:8080/mySystem/students/${studentId}`;
+
+            try {
+                const response = await makeRequest(url, 'DELETE');
+                document.getElementById('studentResponse').value = response;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function editStudent() {
+            const studentId = document.getElementById('studentId').value;
+            const requestBody = document.getElementById('studentJson').value;
+            const url = `http://localhost:8080/mySystem/students/${studentId}`;
+
+            try {
+                const response = await makeRequest(url, 'PUT', JSON.parse(requestBody));
+                document.getElementById('studentResponse').value = response;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function getAllStudents() {
+            const url = 'http://localhost:8080/mySystem/students';
+
+            try {
+                const response = await makeRequest(url, 'GET');
+                document.getElementById('studentResponse').value = response;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function getCourse() {
+            const courseId = document.getElementById('courseId').value;
+            const url = `http://localhost:8080/mySystem/courses/${courseId}`;
+
+            try {
+                const response = await makeRequest(url, 'GET');
+                document.getElementById('courseResponse').value = response;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function addCourse() {
+            const requestBody = document.getElementById('courseJson').value;
+            const url = 'http://localhost:8080/mySystem/courses';
+
+            try {
+                const response = await makeRequest(url, 'POST', JSON.parse(requestBody));
+                document.getElementById('courseResponse').value = response;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function deleteCourse() {
+            const courseId = document.getElementById('courseId').value;
+            const url = `http://localhost:8080/mySystem/courses/${courseId}`;
+
+            try {
+                const response = await makeRequest(url, 'DELETE');
+                document.getElementById('courseResponse').value = response;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function editCourse() {
+            const courseId = document.getElementById('courseId').value;
+            const requestBody = document.getElementById('courseJson').value;
+            const url = `http://localhost:8080/mySystem/courses/${courseId}`;
+
+            try {
+                const response = await makeRequest(url, 'PUT', JSON.parse(requestBody));
+                document.getElementById('courseResponse').value = response;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function getAllCourses() {
+            const url = 'http://localhost:8080/mySystem/courses';
+
+            try {
+                const response = await makeRequest(url, 'GET');
+                document.getElementById('courseResponse').value = response;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
